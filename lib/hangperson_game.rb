@@ -5,13 +5,53 @@ class HangpersonGame
 
   # Get a word from remote "random word" service
 
-  # def initialize()
-  # end
-  
+  attr_accessor :word
+
   def initialize(word)
     @word = word
+    @guesses = []
+    @wrong_guesses = []
+    @guesses_counter = 0
   end
 
+  def guesses
+    @guesses.join(', ')
+  end
+
+  def wrong_guesses
+    @wrong_guesses.join(', ')
+  end
+
+  def guess letter
+    throw 'ArgumentError' unless letter =~ /^[a-zA-Z]{1}$/
+    letter.downcase!
+    @guesses_counter += 1
+    if @word.include? letter
+      if @guesses.include? letter
+        return false
+      else
+        @guesses.push letter
+      end
+    else
+      if @wrong_guesses.include? letter
+        return false
+      else
+        @wrong_guesses.push letter
+      end
+    end
+  end
+
+  def word_with_guesses
+    word.split(//).map {|letter|
+    @guesses.include?(letter) ? letter : "-"
+    }.join
+  end
+
+  def check_win_or_lose
+    return :win unless self.word_with_guesses.include?("-")
+    return :lose if @guesses_counter >= 7
+    :play
+  end
   # You can test it by running $ bundle exec irb -I. -r app.rb
   # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
   #  => "cooking"   <-- some random word

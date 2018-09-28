@@ -67,9 +67,9 @@ class HangpersonApp < Sinatra::Base
   get '/show' do
     state =  @game.check_win_or_lose
     case state
-    when state == :win
+    when :win
       redirect '/win'
-    when state == :lose
+    when :lose
       redirect '/lose'
     else
       erb :show

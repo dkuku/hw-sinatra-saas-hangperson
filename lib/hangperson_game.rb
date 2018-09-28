@@ -25,19 +25,13 @@ class HangpersonGame
   def guess letter
     throw 'ArgumentError' unless letter =~ /^[a-zA-Z]{1}$/
     letter.downcase!
+    return false if (@guesses.include?(letter) || @wrong_guesses.include?(letter))
+
     @guesses_counter += 1
     if @word.include? letter
-      if @guesses.include? letter
-        return false
-      else
-        @guesses.push letter
-      end
+      @guesses.push letter
     else
-      if @wrong_guesses.include? letter
-        return false
-      else
-        @wrong_guesses.push letter
-      end
+      @wrong_guesses.push letter
     end
   end
 

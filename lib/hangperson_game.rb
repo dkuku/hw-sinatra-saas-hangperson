@@ -11,7 +11,7 @@ class HangpersonGame
     @word = word
     @guesses = []
     @wrong_guesses = []
-    @guesses_counter = 0
+    @wrong_guesses_counter = 0
   end
 
   def guesses
@@ -27,10 +27,10 @@ class HangpersonGame
     letter.downcase!
     return false if (@guesses.include?(letter) || @wrong_guesses.include?(letter))
 
-    @guesses_counter += 1
     if @word.include? letter
       @guesses.push letter
     else
+      @wrong_guesses_counter += 1
       @wrong_guesses.push letter
     end
   end
@@ -43,7 +43,7 @@ class HangpersonGame
 
   def check_win_or_lose
     return :win unless self.word_with_guesses.include?("-")
-    return :lose if @guesses_counter >= 7
+    return :lose if @wrong_guesses_counter >= 7
     :play
   end
   # You can test it by running $ bundle exec irb -I. -r app.rb

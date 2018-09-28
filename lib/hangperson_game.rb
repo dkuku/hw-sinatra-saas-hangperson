@@ -15,11 +15,11 @@ class HangpersonGame
   end
 
   def guesses
-    @guesses.join(', ')
+    @guesses.join('')
   end
 
   def wrong_guesses
-    @wrong_guesses.join(', ')
+    @wrong_guesses.join('')
   end
 
   def guess letter
